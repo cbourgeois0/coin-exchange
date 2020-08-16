@@ -1,38 +1,60 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Coin from './components/Coin/Coin';
 import AccountBalance from './components/AccountBalance/AccountBalance';
+import { v4 as uuidv4 } from 'uuid';
+import CoinList from './components/CoinList/CoinList';
+import ExchangeHeader from './components/ExchangeHeader/ExchangeHeader';
+import styled from 'styled-components'
 
-function App() {
+const Div = styled.div`
+  text-align: center;
+  background-color: rgb(98, 98, 180);
+  color: #cccccc;
+`;
+
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+      balance: 10000,
+      coinData: [
+        {
+          key: uuidv4(),
+          name: 'Bitcoin',
+          ticker: 'BTC',
+          price: 9999.99
+        },
+        {
+          key: uuidv4(),
+          name: 'Ethereum',
+          ticker: 'ETH',
+          price: 299.99
+        },
+        {
+          key: uuidv4(),
+          name: 'Tether',
+          ticker: 'USDT',
+          price: 1.0
+        },
+        {
+          key: uuidv4(),
+          name: 'Ripple',
+          ticker: 'XRP',
+          price: 0.2
+        }
+      ]
+    }
+  }
+  render(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img className="App-logo" src={logo} alt="React logo"/>
-        <h1 className="App-title">
-          Coin Exchange
-        </h1>
-      </header>
+    <Div>
+      
+      <ExchangeHeader/>
+      <AccountBalance amount={this.state.balance}/>
+      <CoinList coinData={this.state.coinData}/>
 
-      <AccountBalance amount={10000}/>
-
-      <table className="coin-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Ticker</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <Coin name="Bitcoin" ticker="BTC" price={9999.99}/>
-        <Coin name="Ethereum" ticker="ETH" price={399.99}/>
-        <Coin name="Tether" ticker="USDT" price={1.0}/>
-        <Coin name="Ripple" ticker="XRP" price={0.2}/>
-      </tbody>
-      </table>
-    </div>
+    </Div>
   );
+  }
 }
 
 export default App;
